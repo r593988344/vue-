@@ -42,9 +42,11 @@ export function proxy (target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.set = function proxySetter (val) {
     this[sourceKey][key] = val
   }
+  // 通过 Object.defineProperty 定义 data 的 get set 方法来代理获取 data 中的数据
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
+// 初始化 props methods data computed watch
 export function initState (vm: Component) {
   vm._watchers = []
   const opts = vm.$options
@@ -111,6 +113,7 @@ function initProps (vm: Component, propsOptions: Object) {
 
 function initData (vm: Component) {
   let data = vm.$options.data
+  // 将 data 挂载到 this._data 上
   data = vm._data = typeof data === 'function'
     ? getData(data, vm)
     : data || {}
@@ -144,6 +147,7 @@ function initData (vm: Component) {
         vm
       )
     } else if (!isReserved(key)) {
+      // 通过 proxy 代理_data, vue 组件能直接通过 this 访问到 data 中的数据
       proxy(vm, `_data`, key)
     }
   }

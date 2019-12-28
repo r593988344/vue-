@@ -19,6 +19,7 @@ Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
+  // query 方法 获取 dom 对象 （项目中 el 大部分为 #app 也可以是 dom 对象）
   el = el && query(el)
 
   /* istanbul ignore if */
