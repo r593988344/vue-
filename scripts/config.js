@@ -35,11 +35,15 @@ const resolve = p => {
   }
 }
 
+// 对应 vue 不同版本的打包配置
 const builds = {
   // Runtime only (CommonJS). Used by bundlers e.g. Webpack & Browserify
   'web-runtime-cjs-dev': {
+    // 文件入口
     entry: resolve('web/entry-runtime.js'),
+    // 打包目标目录文件
     dest: resolve('dist/vue.runtime.common.dev.js'),
+    // common JS
     format: 'cjs',
     env: 'development',
     banner
@@ -213,6 +217,7 @@ const builds = {
   }
 }
 
+// 根据 builds 生成 rollup 打包需要的配置选项
 function genConfig (name) {
   const opts = builds[name]
   const config = {
@@ -267,5 +272,6 @@ if (process.env.TARGET) {
   module.exports = genConfig(process.env.TARGET)
 } else {
   exports.getBuild = genConfig
+  // 暴露所有的打包配置
   exports.getAllBuilds = () => Object.keys(builds).map(genConfig)
 }
