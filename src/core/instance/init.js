@@ -30,13 +30,14 @@ export function initMixin (Vue: Class<Component>) {
     // a flag to avoid this being observed
     vm._isVue = true
     // merge options
+    // 判断是否是组件
     if (options && options._isComponent) {
       // optimize internal component instantiation
       // since dynamic options merging is pretty slow, and none of the
       // internal component options needs special treatment.
-      // 将所有的 options（el、data 等） 合并到 this.$options 上
       initInternalComponent(vm, options)
     } else {
+      // 将所有的 options（el、data 等） 合并到 this.$options 上
       vm.$options = mergeOptions(
         resolveConstructorOptions(vm.constructor),
         options || {},

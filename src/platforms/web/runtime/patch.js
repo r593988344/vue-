@@ -9,4 +9,5 @@ import platformModules from 'web/runtime/modules/index'
 // built-in modules have been applied.
 const modules = platformModules.concat(baseModules)
 
+// 此处用到了函数柯里化 区分不同环境下的 modules
 export const patch: Function = createPatchFunction({ nodeOps, modules })

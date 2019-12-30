@@ -724,6 +724,7 @@ export function createPatchFunction (backend) {
             oldVnode.removeAttribute(SSR_ATTR)
             hydrating = true
           }
+          // 服务端渲染
           if (isTrue(hydrating)) {
             if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
               invokeInsertHook(vnode, insertedVnodeQueue, true)
@@ -740,11 +741,14 @@ export function createPatchFunction (backend) {
           }
           // either not server-rendered, or hydration failed.
           // create an empty node and replace it
+          // 创建一个空的 vnode
           oldVnode = emptyNodeAt(oldVnode)
         }
 
         // replacing existing element
+        // 获取执行 emptyNodeAt(oldVnode) 之前的 oldVnode
         const oldElm = oldVnode.elm
+        // 获取 oldElm 的父节点
         const parentElm = nodeOps.parentNode(oldElm)
 
         // create new node

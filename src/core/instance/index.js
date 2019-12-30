@@ -7,6 +7,7 @@ import { warn } from '../util/index'
 
 // Vue 初始化
 function Vue (options) {
+  // option 为一个 render 方法
   if (process.env.NODE_ENV !== 'production' &&
     // 判断 Vue 是否通过 new 关键字初始化
     !(this instanceof Vue)

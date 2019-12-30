@@ -38,10 +38,12 @@ export function initLifecycle (vm: Component) {
     while (parent.$options.abstract && parent.$parent) {
       parent = parent.$parent
     }
+    // 建立组件间父子关系，往父组件 $children 中 push 子组件实例
     parent.$children.push(vm)
   }
-
+    // 子组件 $parent 指向父组件实例
   vm.$parent = parent
+    // 对子组件进行一系列初始化
   vm.$root = parent ? parent.$root : vm
 
   vm.$children = []
@@ -56,9 +58,12 @@ export function initLifecycle (vm: Component) {
 }
 
 export function lifecycleMixin (Vue: Class<Component>) {
+  // 在组件一开始挂载时触发_update 在组件发生更新时再次触发_update
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
     const vm: Component = this
     const prevEl = vm.$el
+    // _vnode 渲染vnode
+    // $vnode 占位vnode
     const prevVnode = vm._vnode
     const restoreActiveInstance = setActiveInstance(vm)
     vm._vnode = vnode
@@ -189,6 +194,7 @@ export function mountComponent (
     }
   } else {
     updateComponent = () => {
+      // vm._render() 获取 vnode
       vm._update(vm._render(), hydrating)
     }
   }
